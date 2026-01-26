@@ -1,3 +1,28 @@
+Metadata-Version: 2.4
+Name: algovivo-pytorch
+Version: 0.1.0
+Summary: PyTorch reimplementation of the algovivo energy-based simulation system
+Author: Algovivo PyTorch Contributors
+License-Expression: MIT
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: torch>=2.0.0
+Requires-Dist: numpy>=1.20.0
+Requires-Dist: matplotlib>=3.5.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: black>=22.0.0; extra == "dev"
+Requires-Dist: flake8>=4.0.0; extra == "dev"
+
 # Algovivo PyTorch Implementation
 
 This is a PyTorch reimplementation of the algovivo energy-based simulation system.
@@ -43,7 +68,7 @@ pip install -e .
 Or install from a git repository:
 
 ```bash
-pip install git+https://github.com/schenkmanjack/alife_bots.git
+pip install git+https://github.com/yourusername/alife_bots.git
 ```
 
 ### Development Setup
@@ -60,105 +85,8 @@ pip install -e .
 pip install -r requirements.txt
 ```
 
-## Using in Another Repository
-
-This package can be installed and used as a dependency in other Python projects.
-
-### Installation Options
-
-**Option 1: Install from GitHub (Recommended)**
-
-Add to your project's `requirements.txt`:
-```
-algovivo-pytorch @ git+https://github.com/schenkmanjack/alife_bots.git
-```
-
-Or install directly:
-```bash
-pip install git+https://github.com/schenkmanjack/alife_bots.git
-```
-
-**Option 2: Install from Local Directory**
-
-If you have cloned this repository locally:
-```bash
-pip install -e /path/to/alife_bots
-```
-
-**Option 3: Install from Built Wheel**
-
-If you have a built wheel file:
-```bash
-pip install algovivo_pytorch-0.1.0-py3-none-any.whl
-```
-
-### Usage Example
-
-Once installed, you can import and use the package in your code:
-
-```python
-from algovivo_pytorch import System, NeuralFramePolicy
-from algovivo_pytorch import (
-    gravity_energy,
-    collision_energy,
-    triangle_energy,
-    muscle_energy,
-    friction_energy,
-    inertia_energy,
-    backward_euler_loss
-)
-
-# Create a simulation system
-system = System(
-    space_dim=2,
-    h=0.033,
-    k_collision=14000.0,
-    k_friction=300.0,
-    k_muscle=90.0,
-    device='cpu'
-)
-
-# Set up your mesh and muscles
-system.set(pos, triangles, muscles=muscles, ...)
-
-# Create a policy for muscle control
-policy = NeuralFramePolicy(input_dim=4, hidden_dims=[64, 64], output_dim=2)
-
-# Run simulation steps
-for step in range(num_steps):
-    # Get muscle actions from policy
-    actions = policy(observations)
-    
-    # Step the simulation
-    system.step(actions)
-    
-    # Access current state
-    positions = system.pos
-    velocities = system.vel
-```
-
-### Adding to Your Project's Dependencies
-
-If you're using `pyproject.toml`:
-```toml
-[project]
-dependencies = [
-    "algovivo-pytorch @ git+https://github.com/schenkmanjack/alife_bots.git",
-    # ... other dependencies
-]
-```
-
-If you're using `setup.py`:
-```python
-install_requires=[
-    "algovivo-pytorch @ git+https://github.com/schenkmanjack/alife_bots.git",
-    # ... other dependencies
-]
-```
-
 ## Running
 
-```bash
 # Run trajectory test
 python test_trajectory.py
 
