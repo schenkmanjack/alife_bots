@@ -8,6 +8,8 @@ This is a PyTorch reimplementation of the algovivo energy-based simulation syste
 - `algovivo_pytorch/system.py`: System class managing simulation state and backward Euler optimization
 - `algovivo_pytorch/policy.py`: NeuralFramePolicy for controlling muscles
 - `test_trajectory.py`: Test script that replicates the trajectory test from the original repo
+- `create_custom_robot.py`: Script for creating robots with different topologies (simple, quadruped, snake, star)
+- `visualize_random_robot.py`: Script for generating and visualizing random robot topologies
 
 ## Status
 
@@ -42,6 +44,12 @@ python debug_step0.py
 
 # Generate video visualization
 python generate_video.py --steps 100 --fps 30
+
+# Create custom robot topologies
+python create_custom_robot.py
+
+# Generate and visualize random robots
+python visualize_random_robot.py
 ```
 
 ## Files
@@ -51,8 +59,11 @@ python generate_video.py --steps 100 --fps 30
   - `system.py`: System class and optimization loop
   - `policy.py`: NeuralFramePolicy
 - `test_trajectory.py`: Trajectory replication test
-- `generate_video.py`: Video visualization generator
-- `simulation.mp4`: Generated video showing the simulation
+- `generate_video.py`: Video visualization generator (uses mesh/policy from algovivo.repo)
+- `create_custom_robot.py`: Create robots with predefined topologies
+- `visualize_random_robot.py`: Generate and visualize random robot topologies
+- `debug_step0.py`: Debug script for first simulation step
+- Output files: Various `.mp4` videos and `.png` images from simulations
 
 ## Investigation Results
 
