@@ -66,7 +66,9 @@ This package can be installed and used as a dependency in other Python projects.
 
 ### Installation Options
 
-**Option 1: Install from GitHub (Recommended)**
+**Option 1: Install from GitHub (For Using the Package)**
+
+This installs a read-only copy of the package. You can use it, but **cannot push changes** back to the repository.
 
 Add to your project's `requirements.txt`:
 ```
@@ -78,19 +80,66 @@ Or install directly:
 pip install git+https://github.com/schenkmanjack/alife_bots.git
 ```
 
-**Option 2: Install from Local Directory**
+**Option 2: Clone for Development (For Making Changes)**
 
-If you have cloned this repository locally:
+If you want to **make changes and push them**, you need to clone the repository first:
+
 ```bash
-pip install -e /path/to/alife_bots
+# Clone the repository
+git clone https://github.com/schenkmanjack/alife_bots.git
+cd alife_bots
+
+# Install in editable mode (changes to code are immediately available)
+pip install -e .
+
+# Make your changes, then push
+git add .
+git commit -m "Your changes"
+git push
 ```
 
-**Option 3: Install from Built Wheel**
+**Option 3: Install from Local Directory (For Local Development)**
+
+If you have both repositories locally (e.g., `alife_bots` and `EvoAI` in the same parent directory), you can install `alife_bots` in your other project's environment:
+
+**For Conda Environments (like EvoAI):**
+
+```bash
+# Activate your conda environment (e.g., evoai)
+conda activate evoai
+
+# Install alife_bots in editable mode from the local path
+pip install -e /home/ubuntu/alife_bots
+
+# Or use a relative path if both repos are in the same directory
+pip install -e ../alife_bots
+```
+
+**Add to EvoAI's `requirements.txt`:**
+```
+-e /home/ubuntu/alife_bots
+# Or use relative path:
+# -e ../alife_bots
+```
+
+**Add to EvoAI's `environment.yml` (under pip section):**
+```yaml
+  - pip:
+    - -e /home/ubuntu/alife_bots
+    # Or use relative path:
+    # - -e ../alife_bots
+```
+
+> **Important:** You **must** install `alife_bots` in the EvoAI conda environment for EvoAI to be able to import and use it. Simply having both repositories on your filesystem is not enough - Python needs the package to be installed in the environment where you're running your code.
+
+**Option 4: Install from Built Wheel**
 
 If you have a built wheel file:
 ```bash
 pip install algovivo_pytorch-0.1.0-py3-none-any.whl
 ```
+
+> **Note:** Installing via `pip install git+...` downloads and installs the package, but it's not a git repository you can push to. To make changes and push them, you must clone the repository first (Option 2).
 
 ### Usage Example
 
@@ -139,7 +188,7 @@ for step in range(num_steps):
 
 ### Adding to Your Project's Dependencies
 
-If you're using `pyproject.toml`:
+**For projects using `pyproject.toml`:**
 ```toml
 [project]
 dependencies = [
@@ -148,13 +197,54 @@ dependencies = [
 ]
 ```
 
-If you're using `setup.py`:
+**For projects using `setup.py`:**
 ```python
 install_requires=[
     "algovivo-pytorch @ git+https://github.com/schenkmanjack/alife_bots.git",
     # ... other dependencies
 ]
 ```
+
+**For projects using `requirements.txt`:**
+```
+algovivo-pytorch @ git+https://github.com/schenkmanjack/alife_bots.git
+```
+
+**For projects using Conda (`environment.yml`):**
+```yaml
+dependencies:
+  - pip
+  - pip:
+    - algovivo-pytorch @ git+https://github.com/schenkmanjack/alife_bots.git
+```
+
+### Example: Using with EvoAI
+
+If you have both `alife_bots` and `EvoAI` repositories locally:
+
+1. **Activate the EvoAI conda environment:**
+   ```bash
+   conda activate evoai
+   ```
+
+2. **Install alife_bots in editable mode:**
+   ```bash
+   pip install -e /home/ubuntu/alife_bots
+   ```
+
+3. **Use in your EvoAI code:**
+   ```python
+   # In any EvoAI Python file
+   from algovivo_pytorch import System, NeuralFramePolicy
+   
+   # Create and use the simulation system
+   system = System(space_dim=2, h=0.033)
+   # ... rest of your code
+   ```
+
+4. **Optional: Add to EvoAI's `requirements.txt` or `environment.yml`** so others can install it automatically:
+   - Add `-e /home/ubuntu/alife_bots` to `requirements.txt`
+   - Or add it to the `pip:` section in `environment.yml`
 
 ## Running
 
