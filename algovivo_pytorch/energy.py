@@ -581,6 +581,11 @@ def muscle_energy_batched(pos, muscles, a, l0, k_muscle, muscle_mask=None):
     Returns:
         energy: [batch_size] - energy per system
     """
+    # UNIQUE IDENTIFIER: Updated version with per-system muscle support (2024-12-19)
+    # This print statement verifies the updated code is being used
+    print("🔧 [ALGOVIVO_UPDATE] Using updated muscle_energy_batched with per-system muscle support! "
+          f"Muscles shape: {muscles.shape}, batch_size: {pos.shape[0]}")
+    
     batch_size = pos.shape[0]
     
     # Check if muscles are per-system or shared
